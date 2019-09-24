@@ -27,20 +27,18 @@
         </com.google.android.material.textview.MaterialTextView>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/fill_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle"
                 android:gravity="fill_horizontal"
                 android:text="@string/about_fill"
-                android:justificationMode="inter_word"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:scrollbars="vertical"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="normal">
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
             </com.google.android.material.textview.MaterialTextView>
 
