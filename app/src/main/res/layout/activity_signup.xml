@@ -206,10 +206,13 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="60dp"
             android:text="@string/confirm">
         </com.google.android.material.button.MaterialButton>
 
     </LinearLayout>
+
+
 
 </ScrollView>
 
