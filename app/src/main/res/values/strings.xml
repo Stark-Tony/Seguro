@@ -9,4 +9,16 @@
     <string name="login_about">About</string>
     <string name="login_contact">Contact</string>
     <string name="login_warnings_errors">Warnings/Errors</string>
+    <string name="about_title">About</string>
+    <string name="mohd_mohtashim_nawaz">Mohd Mohtashim Nawaz</string>
+    <string name="vineet_gupta">Vineet Gupta</string>
+    <string name="aditya_raj">Aditya Raj</string>
+    <string name="team">Team</string>
+    <string name="about_fill" formatted="true">
+        Seguro is a software solution intended to provide safety while travelling on road.\n
+        Crimes and Accidents on roads have been a major problem and is ever increasing. Seguro uses latest data of crimes and accidents happened on roads and uses it to predict the safest possible route from source to destination entered by user.
+        It has been built taking care of accuracy and privacy so it proves to be beneficial to everyone.\n
+        The solution is an attempt from the students of engineering from Indian Institute of Information College, Allahabad.\n
+        We would like to thank our Professors, instructors, seniors and all friends who helped us throughout the journey.
+    </string>
 </resources>
