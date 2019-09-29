@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
     private MaterialTextView login_warning, login_forgot_password, login_signup_link, login_about_link, login_contact_link;
     private TextInputEditText login_email, login_password;
     private MaterialButton login_button_login;
+    private AlertDialog.Builder dialogBuilder;
+    private DialogInterface.OnClickListener dialogClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(LoginActivity.this, "Login Button", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -82,16 +88,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("string_email", login_email.getText().toString());
-        outState.putString("string_password", login_password.getText().toString());
-    }
-
-    @Override
     public void onBackPressed() {
 
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
@@ -100,15 +99,20 @@ public class LoginActivity extends AppCompatActivity {
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-
-                    case DialogInterface.BUTTON_NEUTRAL:
                         dialog.dismiss();
                         break;
                 }
             }
         };
-        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setMessage("Exit?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).setNeutralButton("Cancel", dialogClickListener).show();
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setMessage("Exit?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
         //super.onBackPressed();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("string_email", login_email.getText().toString());
+        outState.putString("string_password", login_password.getText().toString());
     }
 }

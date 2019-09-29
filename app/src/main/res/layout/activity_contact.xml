@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ContactActivity"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context=".ContactActivity">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
@@ -29,132 +29,144 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="10dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/email">
-
-            </ImageView>
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="5dp"
-                android:clickable="true"
-                android:textColor="@color/linkColor"
-                android:text="@string/email_nawaz">
-
-            </com.google.android.material.textview.MaterialTextView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/email">
-
-            </ImageView>
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="5dp"
-                android:clickable="true"
-                android:textColor="@color/linkColor"
-                android:text="@string/email_vineet">
-
-            </com.google.android.material.textview.MaterialTextView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/phone">
-
-            </ImageView>
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="5dp"
-                android:clickable="true"
-                android:textColor="@color/linkColor"
-                android:text="@string/phone_nawaz">
-
-            </com.google.android.material.textview.MaterialTextView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/phone">
-
-            </ImageView>
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:paddingLeft="5dp"
-                android:clickable="true"
-                android:textColor="@color/linkColor"
-                android:text="@string/phone_vineet">
-
-            </com.google.android.material.textview.MaterialTextView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="60dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/email">
+
+            </ImageView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/contact_email_1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:clickable="true"
+                android:paddingLeft="5dp"
+                android:text="@string/email_nawaz"
+                android:textColor="@color/linkColor">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/email">
+
+            </ImageView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/contact_email_2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:clickable="true"
+                android:paddingLeft="5dp"
+                android:text="@string/email_vineet"
+                android:textColor="@color/linkColor">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/phone">
+
+            </ImageView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/contact_phone_1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:clickable="true"
+                android:paddingLeft="5dp"
+                android:text="@string/phone_nawaz"
+                android:textColor="@color/linkColor">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:clickable="false"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/phone">
+
+            </ImageView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/contact_phone_2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:clickable="true"
+                android:paddingLeft="5dp"
+                android:text="@string/phone_vineet"
+                android:textColor="@color/linkColor">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="60dp"
+            android:orientation="horizontal"
             android:weightSum="3">
+
             <ImageView
+                android:id="@+id/contact_social_1"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/linkndin"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:layout_weight="1">
-            </ImageView>
+                android:src="@drawable/linkndin"></ImageView>
+
             <ImageView
+                android:id="@+id/contact_social_2"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/facebook"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:layout_weight="1">
-            </ImageView>
+                android:src="@drawable/facebook"></ImageView>
+
             <ImageView
+                android:id="@+id/contact_social_3"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/twitter"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:layout_weight="1">
-            </ImageView>
+                android:src="@drawable/twitter"></ImageView>
         </LinearLayout>
 
     </LinearLayout>
