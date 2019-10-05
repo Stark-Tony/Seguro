@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setMessage("Exit?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+        dialogBuilder.setMessage("Do you want to exit?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
         //super.onBackPressed();
     }
 
