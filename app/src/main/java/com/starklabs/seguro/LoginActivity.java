@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText login_email, login_password;
     private MaterialButton login_button_login;
     private AlertDialog.Builder dialogBuilder, rationalBuilder;
-    private DialogInterface.OnClickListener dialogClickListener, rationalClickListener;
+    private DialogInterface.OnClickListener dialogClickListener;
 
 
     @Override
@@ -40,10 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (ContextCompat.checkSelfPermission(getBaseContext(),Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(getBaseContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1011);
-        }
+        LoginActivity.checkPerms(this);
 
         login_warning = findViewById(R.id.login_warning);
         login_forgot_password = findViewById(R.id.login_forgot_password);
@@ -133,46 +131,49 @@ public class LoginActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode==1011)
-        {
-            for(int i=0;i<permissions.length;i++)
-            {
-                String perm=permissions[i];
-                if(grantResults[i]==PackageManager.PERMISSION_DENIED)
-                {
-                    rationalBuilder = new AlertDialog.Builder(this);
-                    boolean showRationle = ActivityCompat.shouldShowRequestPermissionRationale(this,perm);
-                    if(!showRationle)
-                    {
-                        rationalBuilder.setMessage("Location permission is required\nGrant permission?").setPositiveButton("Yes", rationalClickListener).setNegativeButton("Exit", rationalClickListener).show();
+        if (requestCode == 1011) {
+
+
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED || grantResults[1] == PackageManager.PERMISSION_DENIED) {
+                rationalBuilder = new AlertDialog.Builder(this);
+                rationalBuilder.setMessage("Location permission is required\nGrant permission?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        LoginActivity.startAppSettings(LoginActivity.this);
+
+                        dialog.dismiss();
                     }
-                    else
-                    {
-                        rationalBuilder.setMessage("Location permission is required\nGrant permission?").setPositiveButton("Yes", rationalClickListener).setNegativeButton("Exit", rationalClickListener).show();
+                }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
                     }
-                }
+                }).show();
             }
         }
 
-        rationalClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        dialog.dismiss();
-                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package",getPackageName(),null));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-                        break;
+    }
 
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        dialog.dismiss();
-                        finish();
-                        break;
-                }
-            }
-        };
+    public static void startAppSettings(final Activity context) {
+        if (context == null) {
+            return;
+        }
+        final Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setData(Uri.parse("package:"+context.getPackageName()));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        context.startActivity(intent);
+    }
 
+    public static void checkPerms(Activity context)
+    {
+        if (ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1011);
+        }
     }
 }
