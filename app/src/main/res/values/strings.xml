@@ -64,4 +64,7 @@
     <string name="title_rate">Rate</string>
     <string name="main_destination">Destination</string>
     <string name="main_source">Source</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
