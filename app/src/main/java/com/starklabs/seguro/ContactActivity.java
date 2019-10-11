@@ -91,4 +91,9 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new HideStatus().hideStatus(getWindow());
+    }
 }

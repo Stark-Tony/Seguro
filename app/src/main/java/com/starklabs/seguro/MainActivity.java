@@ -26,6 +26,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -106,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements com.starklabs.seg
         int lockMode = enabled ? DrawerLayout.LOCK_MODE_UNLOCKED : DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
         mDrawerLayout.setDrawerLockMode(lockMode);
     }
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new HideStatus().hideStatus(getWindow());
+    }
 }

@@ -188,6 +188,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        new HideStatus().hideStatus(getWindow());
         //Shift Internet check to splash screen OnCreate so that app quits if no internet connection is found
         if (!checkInternet()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

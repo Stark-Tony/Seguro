@@ -11,4 +11,9 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new HideStatus().hideStatus(getWindow());
+    }
 }

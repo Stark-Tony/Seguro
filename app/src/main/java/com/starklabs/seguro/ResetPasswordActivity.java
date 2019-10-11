@@ -11,4 +11,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new HideStatus().hideStatus(getWindow());
+    }
 }
