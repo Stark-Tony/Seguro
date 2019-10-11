@@ -17,6 +17,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -34,24 +36,16 @@ public class MainActivity extends AppCompatActivity implements com.starklabs.seg
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     static View rootLayout;
-    private LocationManager mLocationManager;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        //mToolbar=findViewById(R.id.toolbar);
-        //setSupportActionBar(mToolbar);
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        //ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this, mDrawerLayout,mToolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //mDrawerLayout.addDrawerListener(toggle);
-        //toggle.syncState();
-
         rootLayout = findViewById(R.id.drawer_layout);
         mNavigationView = findViewById(R.id.main_navigation_view);
+
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -111,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements com.starklabs.seg
     public void setDrawerEnabled(boolean enabled) {
         int lockMode = enabled ? DrawerLayout.LOCK_MODE_UNLOCKED : DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
         mDrawerLayout.setDrawerLockMode(lockMode);
-        //toggle.setDrawerIndicatorEnabled(enabled);
     }
 
 

@@ -9,15 +9,15 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+
+
+
+    <!-- This linear layout is just to be replaced with Map Fragment. Do not put anything inside -->
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-
-    </LinearLayout>
+        android:orientation="vertical"/>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/main_navigation_view"
@@ -25,18 +25,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_drawer_header"
-        app:menu="@menu/nav_drawer_menu">
+        app:menu="@menu/nav_drawer_menu"
+        android:fitsSystemWindows="true">
 
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
-
-    <!--
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:elevation="4dp">
-                </androidx.appcompat.widget.Toolbar>
-                -->
