@@ -34,6 +34,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/signup_warning"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="25dp"
@@ -66,6 +67,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/signup_name"
+                android:inputType="textPersonName"
                 android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -73,6 +76,7 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/signup_gender"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:weightSum="3">
@@ -81,17 +85,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/male"
+                android:id="@+id/signup_radio_male"
                 android:layout_weight="1"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/signup_radio_female"
                 android:text="@string/female"
                 android:layout_weight="1"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/signup_radio_others"
                 android:text="@string/others"
                 android:layout_weight="1"/>
 
@@ -107,15 +114,14 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:hintEnabled="true"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/calender">
+            app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:inputType="date" />
+                android:drawableRight="@drawable/calender"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,6 +140,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/signup_email"
                 android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -153,6 +160,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/signup_phone"
+                android:inputType="phone"
                 android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -174,6 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:id="@+id/signup_password"
                 android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -195,6 +205,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:id="@+id/signup_confirm_password"
                 android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -203,6 +214,7 @@
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/signup_button_confirm"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"

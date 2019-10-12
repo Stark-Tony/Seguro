@@ -3,6 +3,7 @@ package com.starklabs.seguro;
 import android.Manifest;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -84,7 +86,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         SupportMapFragment mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment);
         myActivity = ((AppCompatActivity) getActivity());
         mToolbar = myActivity.findViewById(R.id.toolbar);
-        searchBox=myActivity.findViewById(R.id.main_card_view);
+        searchBox = myActivity.findViewById(R.id.main_card_view);
 
         myActivity.setSupportActionBar(mToolbar);
         myActivity.getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -120,38 +122,39 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if(searchBox.isShown())
-                {
-                    Animation fadeOut = new AlphaAnimation(1,0);
+                if (searchBox.isShown()) {
+                    Animation fadeOut = new AlphaAnimation(1, 0);
                     fadeOut.setInterpolator(new AccelerateInterpolator());
                     fadeOut.setDuration(400);
                     fadeOut.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
                         }
+
                         @Override
                         public void onAnimationEnd(Animation animation) {
                             searchBox.setVisibility(View.GONE);
                         }
+
                         @Override
                         public void onAnimationRepeat(Animation animation) {
                         }
                     });
                     searchBox.startAnimation(fadeOut);
-                }
-                else
-                {
-                    Animation fadeIn = new AlphaAnimation(0,1);
+                } else {
+                    Animation fadeIn = new AlphaAnimation(0, 1);
                     fadeIn.setInterpolator(new DecelerateInterpolator());
                     fadeIn.setDuration(400);
                     fadeIn.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
                         }
+
                         @Override
                         public void onAnimationEnd(Animation animation) {
                             searchBox.setVisibility(View.VISIBLE);
                         }
+
                         @Override
                         public void onAnimationRepeat(Animation animation) {
                         }
@@ -261,4 +264,5 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         } else
             return true;
     }
+
 }
