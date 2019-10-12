@@ -230,12 +230,13 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
 
     @Override
     public void onProviderDisabled(String provider) {
-        if (getContext() != null) {
+        if (getContext() != null && mapView.isShown()) {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
             alertBuilder.setMessage("GPS is required\nEnable it?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
                     dialog.dismiss();
                 }
             }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {

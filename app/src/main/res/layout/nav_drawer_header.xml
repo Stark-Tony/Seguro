@@ -6,7 +6,7 @@
     android:gravity="bottom"
     android:layout_marginTop="25dp"
     android:padding="16dp"
-    android:background="#e7e7e7">
+    android:background="#c8c8c8">
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     case DialogInterface.BUTTON_NEGATIVE:
                         dialog.dismiss();
+                        new HideStatus().hideStatus(getWindow());
                         break;
                 }
             }
