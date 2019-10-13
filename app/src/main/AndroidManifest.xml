@@ -18,7 +18,8 @@
         <activity
             android:name=".SignupActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"></activity>
-        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".ResetPasswordActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".ForgotPasswordActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />

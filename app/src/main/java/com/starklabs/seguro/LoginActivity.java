@@ -30,6 +30,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+
 public class LoginActivity extends AppCompatActivity {
 
     private MaterialTextView login_warning, login_forgot_password, login_signup_link, login_about_link, login_contact_link;
@@ -37,12 +40,21 @@ public class LoginActivity extends AppCompatActivity {
     private MaterialButton login_button_login;
     private AlertDialog.Builder dialogBuilder, rationalBuilder;
     private DialogInterface.OnClickListener dialogClickListener;
-
+    HideStatus hideStatusBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        hideStatusBar = new HideStatus();
+        KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                if (!isOpen) {
+                    hideStatusBar.hideStatus(getWindow());
+                }
+            }
+        });
 
         LoginActivity.checkPerms(this);
 
@@ -189,7 +201,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new HideStatus().hideStatus(getWindow());
+        hideStatusBar.hideStatus(getWindow());
         //Shift Internet check to splash screen OnCreate so that app quits if no internet connection is found
         if (!checkInternet()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

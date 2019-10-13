@@ -105,26 +105,39 @@
 
         </RadioGroup>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:hint="@string/date_of_birth"
+            android:layout_width="match_parent"
             android:layout_marginTop="15dp"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:hintEnabled="true">
+            android:weightSum="7">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="D.O.B:"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
                 android:id="@+id/signup_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/calender"
-                android:singleLine="true" />
+                android:hint="Date of Birth(DD/MM/YYYY)"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:src="@drawable/calender"
+                android:clickable="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="15dp"
+                android:id="@+id/signup_calender"/>
+
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

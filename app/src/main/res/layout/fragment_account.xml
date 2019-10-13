@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
         android:weightSum="6">
@@ -179,7 +179,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="PhoneNumber:"
+            android:text="Phone\nNumber:"
             android:layout_marginStart="5dp"
             android:layout_weight="1">
         </com.google.android.material.textview.MaterialTextView>
@@ -215,6 +215,32 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/account_save"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="save"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/account_cancel"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="15dp"
+            android:text="cancle"/>
+
+    </LinearLayout>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/acount_change_pass"
         android:layout_width="wrap_content"
@@ -224,8 +250,7 @@
         android:layout_gravity="center_horizontal"
         android:clickable="true"
         android:textColor="@color/linkColor"
-        android:text="Change Password"
-        android:textSize="20sp">
+        android:text="Change Password?">
     </com.google.android.material.textview.MaterialTextView>
 
 

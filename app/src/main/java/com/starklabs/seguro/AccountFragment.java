@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+
 
 public class AccountFragment extends Fragment {
 
@@ -35,16 +38,25 @@ public class AccountFragment extends Fragment {
         DrawerLocker drawerLocker= (DrawerLocker) getActivity();
         drawerLocker.setDrawerEnabled(false);
 
+        KeyboardVisibilityEvent.setEventListener(getActivity(), new KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                if (!isOpen) {
+                    new HideStatus().hideStatus(getActivity().getWindow());
+                }
+            }
+        });
+
         View acount_view=inflater.inflate(R.layout.fragment_account, container, false);
-        edit_acount_name = (MaterialTextView) acount_view.findViewById(R.id.edit_acount_name);
-        edit_acount_email = (MaterialTextView) acount_view.findViewById(R.id.edit_acount_email);
-        edit_acount_dob = (MaterialTextView) acount_view.findViewById(R.id.edit_acount_dob);
-        edit_acount_phone_no = (MaterialTextView) acount_view.findViewById(R.id.edit_acount_phone_no);
-        acount_name=(TextInputEditText) acount_view.findViewById(R.id.acount_name);
-        acount_email=(TextInputEditText) acount_view.findViewById(R.id.acount_email);
-        acount_dob=(TextInputEditText) acount_view.findViewById(R.id.acount_dob);
-        acount_phone_no=(TextInputEditText) acount_view.findViewById(R.id.acount_phone_no);
-        acount_change_pass=(MaterialTextView) acount_view.findViewById(R.id.acount_change_pass);
+        edit_acount_name = acount_view.findViewById(R.id.edit_acount_name);
+        edit_acount_email =  acount_view.findViewById(R.id.edit_acount_email);
+        edit_acount_dob =  acount_view.findViewById(R.id.edit_acount_dob);
+        edit_acount_phone_no = acount_view.findViewById(R.id.edit_acount_phone_no);
+        acount_name= acount_view.findViewById(R.id.acount_name);
+        acount_email= acount_view.findViewById(R.id.acount_email);
+        acount_dob= acount_view.findViewById(R.id.acount_dob);
+        acount_phone_no= acount_view.findViewById(R.id.acount_phone_no);
+        acount_change_pass= acount_view.findViewById(R.id.acount_change_pass);
 
         edit_acount_name.setOnClickListener(new View.OnClickListener() {
              @Override
