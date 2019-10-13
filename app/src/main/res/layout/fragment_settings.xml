@@ -1,15 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingsFragment"
+    android:orientation="vertical"
     android:id="@+id/fragment_settings">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is Settings Fragment" />
 
-</FrameLayout>
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="Settings"
+        android:textSize="30sp">
+    </com.google.android.material.textview.MaterialTextView>
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:clickable="true"
+            android:text="@string/google_location_setting"
+            android:textSize="20sp">
+        </com.google.android.material.textview.MaterialTextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text="Start map in satallite view"
+                android:textSize="20sp"
+                android:layout_weight="4">
+            </com.google.android.material.textview.MaterialTextView>
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:switchMinWidth="26dp"
+                android:checked="true"
+                android:textOff="OFF"
+                android:textOn="ON"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:clickable="true"
+            android:text="Acounts"
+            android:textSize="20sp">
+        </com.google.android.material.textview.MaterialTextView>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
