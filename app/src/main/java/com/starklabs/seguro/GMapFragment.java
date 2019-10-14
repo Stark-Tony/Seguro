@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -29,9 +30,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,6 +50,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -78,7 +84,6 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
     private CardView searchBox;
     private TextView searchHere;
     AppCompatActivity myActivity;
-    LocationRequest mLocationRequest;
 
     public GMapFragment() {
         //required empty constructor
@@ -106,10 +111,6 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();
         mLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(2500);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
     }
 
@@ -208,7 +209,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
                 if (myActivity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && myActivity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
                 }
-                service.requestLocationUpdates(provider,5000,1,GMapFragment.this);
+                service.requestLocationUpdates(provider, 5000, 1, GMapFragment.this);
                 mLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
@@ -226,7 +227,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         searchHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,new AutoCompleteFragment()).addToBackStack("MapFragment").commit();
+                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, new AutoCompleteFragment()).addToBackStack("MapFragment").commit();
             }
         });
 
