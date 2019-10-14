@@ -38,14 +38,12 @@ public class AccountFragment extends Fragment {
         DrawerLocker drawerLocker= (DrawerLocker) getActivity();
         drawerLocker.setDrawerEnabled(false);
 
-        KeyboardVisibilityEvent.setEventListener(getActivity(), new KeyboardVisibilityEventListener() {
-            @Override
-            public void onVisibilityChanged(boolean isOpen) {
-                if (!isOpen) {
-                    new HideStatus().hideStatus(getActivity().getWindow());
-                }
-            }
-        });
+        getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
         View acount_view=inflater.inflate(R.layout.fragment_account, container, false);
         edit_acount_name = acount_view.findViewById(R.id.edit_acount_name);

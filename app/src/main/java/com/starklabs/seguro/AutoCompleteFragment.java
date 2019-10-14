@@ -3,18 +3,23 @@ package com.starklabs.seguro;
 
 import android.os.Bundle;
 
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SettingsFragment extends Fragment {
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 
-    public SettingsFragment() {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class AutoCompleteFragment extends Fragment {
+
+
+    public AutoCompleteFragment() {
         // Required empty public constructor
     }
 
@@ -31,7 +36,7 @@ public class SettingsFragment extends Fragment {
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.fragment_auto_complete, container, false);
     }
 
     @Override
@@ -41,5 +46,8 @@ public class SettingsFragment extends Fragment {
         super.onDestroy();
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }

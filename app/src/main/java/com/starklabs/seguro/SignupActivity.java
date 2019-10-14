@@ -77,14 +77,6 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        KeyboardVisibilityEvent.setEventListener(this, new KeyboardVisibilityEventListener() {
-            @Override
-            public void onVisibilityChanged(boolean isOpen) {
-                if (!isOpen) {
-                    new HideStatus().hideStatus(getWindow());
-                }
-            }
-        });
 
     }
 
@@ -106,7 +98,6 @@ public class SignupActivity extends AppCompatActivity {
                     month_str = "" + month;
                 }
                 signup_date.setText(new StringBuilder().append(day_of_month).append("/").append(month_str).append("/").append(year));
-                new HideStatus().hideStatus(window);
             }
         }, calender.get(Calendar.YEAR), calender.get(Calendar.MONTH), calender.get(Calendar.DAY_OF_MONTH));
 
@@ -114,7 +105,6 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
-                new HideStatus().hideStatus(window);
             }
         });
 
@@ -125,7 +115,6 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        new HideStatus().hideStatus(window);
         super.onResume();
     }
 

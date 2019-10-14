@@ -15,6 +15,5 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new HideStatus().hideStatus(getWindow());
     }
 }

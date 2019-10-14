@@ -26,6 +26,7 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -73,6 +74,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
     private FusedLocationProviderClient mLocationProviderClient;
     private DrawerLayout mDrawerLayout;
     private CardView searchBox;
+    private TextView searchHere;
     AppCompatActivity myActivity;
 
     public GMapFragment() {
@@ -87,6 +89,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         myActivity = ((AppCompatActivity) getActivity());
         mToolbar = myActivity.findViewById(R.id.toolbar);
         searchBox = myActivity.findViewById(R.id.main_card_view);
+        searchHere = myActivity.findViewById(R.id.map_searchbox);
 
         myActivity.setSupportActionBar(mToolbar);
         myActivity.getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -198,6 +201,13 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
                 if (gMap.getMyLocation() != null) {
                     gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(gMap.getMyLocation().getLatitude(), gMap.getMyLocation().getLongitude()), 15));
                 }
+            }
+        });
+
+        searchHere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,new AutoCompleteFragment()).addToBackStack("MapFragment").commit();
             }
         });
 
