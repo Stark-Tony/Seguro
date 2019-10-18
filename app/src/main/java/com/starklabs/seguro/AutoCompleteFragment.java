@@ -17,6 +17,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
@@ -41,9 +43,13 @@ import java.util.List;
 
 public class AutoCompleteFragment extends Fragment {
 
-    TextInputEditText source;
-    TextInputEditText destination;
+    AutoCompleteTextView source;
+    AutoCompleteTextView destination;
     Location currentLocation;
+
+    private static final String [] Addr=new String[]{"11", "12", "13"};
+    ArrayAdapter<String> mArrayAdapter;
+
     public AutoCompleteFragment() {
         // Required empty public constructor
     }
@@ -115,38 +121,8 @@ public class AutoCompleteFragment extends Fragment {
             }
         });
 
-        source.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        destination.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        mArrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_dropdown_item_1line,Addr);
+        destination.setAdapter(mArrayAdapter);
     }
 
     @Override
