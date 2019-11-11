@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -17,6 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,13 +50,25 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.maps.android.PolyUtil;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.CacheRequest;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.Proxy;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,7 +82,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-public class GMapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
+public class GMapFragment extends Fragment implements OnMapReadyCallback, LocationListener{
 
     View mapView;
     View locationButton;
@@ -128,7 +142,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         gMap = googleMap;
         gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         gMap.setMyLocationEnabled(true);
-        gMap.setTrafficEnabled(true);
+        gMap.setTrafficEnabled(false);
 
         gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -227,7 +241,9 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         searchHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, new AutoCompleteFragment()).addToBackStack("MapFragment").commit();
+                //myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, new AutoCompleteFragment()).addToBackStack("MapFragment").commit();
+                //https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=40.43399,-81.38600&alternatives=true&key=AIzaSyAwdxRlmAXwjm_mcFQnM-f-vguZr6JkxV8
+                new FetchURL(getContext(),gMap).execute();
             }
         });
 
@@ -294,6 +310,18 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
             return false;
         } else
             return true;
+    }
+
+    void addPolyLine(ArrayList<String> polyLines)
+    {
+        for(String poly:polyLines)
+        {
+            PolylineOptions options = new PolylineOptions();
+            options.color(Color.RED);
+            options.width(10);
+            options.addAll(PolyUtil.decode(poly));
+            gMap.addPolyline(options);
+        }
     }
 
 }

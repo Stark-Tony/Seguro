@@ -25,6 +25,9 @@ import com.google.android.material.textview.MaterialTextView;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -66,7 +69,16 @@ public class SignupActivity extends AppCompatActivity {
         signup_button_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                if(signup_name.getText().toString().trim().equals(""))
+                {
+                    Toast.makeText(SignupActivity.this, "Please fill the name", Toast.LENGTH_LONG).show();
+                }
+                if (!rbMale.isChecked() && !rbFemale.isChecked() && !rbOthers.isChecked())
+                {
+                    Toast.makeText(SignupActivity.this, "Please select gender", Toast.LENGTH_SHORT).show();
+                }
+                JSONObject signup_object = new JSONObject();
+                String name = signup_name.getText().toString().trim();
             }
         });
 
