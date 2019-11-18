@@ -7,14 +7,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class DataParser {
-    public ArrayList<String> getPolyline(String responseBody)
+    public ArrayList<ArrayList<String>> getPolyline(String responseBody)
     {
+        ArrayList<ArrayList<String>>  routesList = new ArrayList<>();
         ArrayList<String> polyLinesList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(responseBody);
             JSONArray routeJsonArray = jsonObject.getJSONArray("routes");
             for (int i = 0; i < routeJsonArray.length(); i++)
             {
+                ArrayList<String> routelist=new ArrayList<>();
                 JSONObject route = routeJsonArray.getJSONObject(i);
                 JSONArray legJsonArray = route.getJSONArray("legs");
                 for(int j=0;j<legJsonArray.length();j++)
@@ -25,13 +27,14 @@ public class DataParser {
                     {
                         JSONObject step = stepJsonArray.getJSONObject(k);
                         String polyLine =step.getJSONObject("polyline").getString("points");
-                        polyLinesList.add(polyLine);
+                        routelist.add(polyLine);
                     }
                 }
+                routesList.add(routelist);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return polyLinesList;
+        return routesList;
     }
 }

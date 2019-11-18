@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -25,6 +28,7 @@ public class FetchURL extends AsyncTask<String, Void,String> {
     Context mContext;
     String object="";
     ArrayList<String> polyLines;
+    ArrayList<ArrayList<String>> routesList;
     GoogleMap mMap;
     LatLng source, destination;
     public FetchURL(Context context, GoogleMap mMap, LatLng source, LatLng destination)
@@ -48,24 +52,48 @@ public class FetchURL extends AsyncTask<String, Void,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         polyLines = new ArrayList<>();
+        routesList= new ArrayList<>();
         DataParser dataParser = new DataParser();
-        polyLines=dataParser.getPolyline(object);
-        for(int i=0;i<polyLines.size();i++)
+        routesList=dataParser.getPolyline(object);
+        Log.d("size",routesList.size()+"");
+        int i=1;
+        int r=40,g=40,b=40;
+        mMap.clear();
+        for(ArrayList<String> route:routesList)
         {
-            Log.d("mylog",polyLines.get(i)+"\n");
+            polyLines = route;
+            for(String poly:polyLines)
+            {
+                PolylineOptions options = new PolylineOptions();
+                options.color(Color.rgb(r,g,b));
+                options.width(12);
+                options.jointType(JointType.ROUND);
+                options.addAll(PolyUtil.decode(poly));
+                mMap.addPolyline(options);
+            }
+            if(i%3==1)
+            {
+                g+=100;
+            }
+            else if (i%3==2)
+            {
+                b+=100;
+            }
+            else if(i%3==0)
+            {
+                r+=100;
+            }
+            i++;
+            if(r>255)
+                r=40;
+            if(g>255)
+                g=40;
+            if(b>255)
+                b=40;
         }
-        for(String poly:polyLines)
-        {
-            PolylineOptions options = new PolylineOptions();
-            options.color(Color.rgb(40,40,40));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(source.latitude,source.longitude)).title("Source"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(destination.latitude,destination.longitude)).title("Destination"));
 
-            options.width(10);
-
-            options.addAll(PolyUtil.decode(poly));
-            mMap.addPolyline(options);
-            mMap.addMarker(new MarkerOptions().position(new LatLng(source.latitude,source.longitude)).title("Source"));
-            mMap.addMarker(new MarkerOptions().position(new LatLng(destination.latitude,destination.longitude)).title("Destination"));
-        }
     }
 
     public String fetchData (String url) throws IOException {

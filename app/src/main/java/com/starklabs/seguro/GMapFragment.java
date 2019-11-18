@@ -323,16 +323,4 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
             return true;
     }
 
-    void addPolyLine(ArrayList<String> polyLines)
-    {
-        for(String poly:polyLines)
-        {
-            PolylineOptions options = new PolylineOptions();
-            options.color(Color.RED);
-            options.width(10);
-            options.addAll(PolyUtil.decode(poly));
-            gMap.addPolyline(options);
-        }
-    }
-
 }
