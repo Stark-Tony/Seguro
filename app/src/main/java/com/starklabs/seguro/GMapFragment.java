@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -253,6 +254,16 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("return","I am here in resume");
+        Log.d("return",MainActivity.destLL+" "+MainActivity.sourceLL);
+        if(MainActivity.destLL!=null && MainActivity.sourceLL!=null)
+        {
+            Log.d("return","I am here in resume not null");
+            Log.d("return",MainActivity.destLL+" "+MainActivity.sourceLL);
+            new FetchURL(getContext(),gMap,MainActivity.sourceLL,MainActivity.destLL).execute();
+            MainActivity.sourceLL=MainActivity.destLL=null;
+            Log.d("return",MainActivity.destLL+" "+MainActivity.sourceLL);
+        }
         new HideStatus().hideStatus(getActivity().getWindow());
         provider = LocationManager.GPS_PROVIDER;
         if (myActivity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && myActivity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

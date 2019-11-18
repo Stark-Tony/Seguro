@@ -76,7 +76,6 @@ public class AutoCompleteFragment extends Fragment {
         // Inflate the layout for this fragment
         DrawerLocker drawerLocker= (DrawerLocker) getActivity();
         drawerLocker.setDrawerEnabled(false);
-
         return inflater.inflate(R.layout.fragment_auto_complete, container, false);
     }
 
@@ -122,6 +121,8 @@ public class AutoCompleteFragment extends Fragment {
                                 {
                                     autocompleteSource.a.setText(address.get(0).getAddressLine(0));
                                     currentLocation = location;
+                                    LatLng tempLatLang = new LatLng(location.getLatitude(), location.getLongitude());
+                                    sourceLatLang = tempLatLang;
                                 }
                             } catch (IOException e) {
                                 Toast.makeText(getActivity(), "Unable to fetch location", Toast.LENGTH_SHORT).show();
@@ -131,10 +132,14 @@ public class AutoCompleteFragment extends Fragment {
                 });
             }
         });
+
+        //Sending data to Google Maps to de drawn on map
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MainActivity.sourceLL=sourceLatLang;
+                MainActivity.destLL=destLatLang;
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
         if(!Places.isInitialized())

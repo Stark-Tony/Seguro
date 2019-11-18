@@ -31,6 +31,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements com.starklabs.seguro.DrawerLocker {
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements com.starklabs.seg
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     static View rootLayout;
+    static LatLng sourceLL=null;
+    static LatLng destLL=null;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override

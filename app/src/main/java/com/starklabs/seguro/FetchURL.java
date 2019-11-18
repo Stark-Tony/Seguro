@@ -26,10 +26,13 @@ public class FetchURL extends AsyncTask<String, Void,String> {
     String object="";
     ArrayList<String> polyLines;
     GoogleMap mMap;
-    public FetchURL(Context context, GoogleMap mMap)
+    LatLng source, destination;
+    public FetchURL(Context context, GoogleMap mMap, LatLng source, LatLng destination)
     {
         mContext = context;
         this.mMap = mMap;
+        this.source=source;
+        this.destination=destination;
     }
     @Override
     protected String doInBackground(String... strings) {
@@ -54,12 +57,14 @@ public class FetchURL extends AsyncTask<String, Void,String> {
         for(String poly:polyLines)
         {
             PolylineOptions options = new PolylineOptions();
-            options.color(Color.RED);
+            options.color(Color.rgb(40,40,40));
+
             options.width(10);
+
             options.addAll(PolyUtil.decode(poly));
             mMap.addPolyline(options);
-            mMap.addMarker(new MarkerOptions().position(new LatLng(25.429319,81.769892)).title("Source"));
-            mMap.addMarker(new MarkerOptions().position(new LatLng(25.452554,81.833027)).title("Destination"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(source.latitude,source.longitude)).title("Source"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(destination.latitude,destination.longitude)).title("Destination"));
         }
     }
 
@@ -69,7 +74,8 @@ public class FetchURL extends AsyncTask<String, Void,String> {
         String line="";
         StringBuffer responseContent = null;
         try {
-            URL url1 = new URL("https://maps.googleapis.com/maps/api/directions/json?origin=25.429319,81.769892&destination=25.452554,81.833027&alternatives=true&key=AIzaSyAwdxRlmAXwjm_mcFQnM-f-vguZr6JkxV8");
+
+            URL url1 = new URL("https://maps.googleapis.com/maps/api/directions/json?origin="+source.latitude+","+source.longitude+"&destination="+destination.latitude+","+destination.longitude+"&alternatives=true&key=AIzaSyAwdxRlmAXwjm_mcFQnM-f-vguZr6JkxV8");
             connection = (HttpURLConnection) url1.openConnection();
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(10000);
