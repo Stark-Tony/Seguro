@@ -114,4 +114,5 @@ public class MainActivity extends AppCompatActivity implements com.starklabs.seg
         super.onResume();
         new HideStatus().hideStatus(getWindow());
     }
+
 }

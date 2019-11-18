@@ -241,9 +241,9 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         searchHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, new AutoCompleteFragment()).addToBackStack("MapFragment").commit();
+                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, new AutoCompleteFragment()).addToBackStack("MapFragment").commit();
                 //https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=40.43399,-81.38600&alternatives=true&key=AIzaSyAwdxRlmAXwjm_mcFQnM-f-vguZr6JkxV8
-                new FetchURL(getContext(),gMap).execute();
+                //new FetchURL(getContext(),gMap).execute();
             }
         });
 

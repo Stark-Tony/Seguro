@@ -1,11 +1,14 @@
 package com.starklabs.seguro;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
 
@@ -51,10 +54,12 @@ public class FetchURL extends AsyncTask<String, Void,String> {
         for(String poly:polyLines)
         {
             PolylineOptions options = new PolylineOptions();
-            options.color(R.color.colorAccent);
+            options.color(Color.RED);
             options.width(10);
             options.addAll(PolyUtil.decode(poly));
             mMap.addPolyline(options);
+            mMap.addMarker(new MarkerOptions().position(new LatLng(25.429319,81.769892)).title("Source"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(25.452554,81.833027)).title("Destination"));
         }
     }
 
