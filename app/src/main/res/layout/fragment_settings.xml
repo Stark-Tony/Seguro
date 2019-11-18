@@ -53,7 +53,7 @@
                     android:fontFamily="sans-serif"
                     android:textSize="16sp"
                     android:layout_weight="3.5"
-                    android:text="Start map in satellite view">
+                    android:text="Enable traffic">
 
                 </com.google.android.material.textview.MaterialTextView>
 
@@ -62,7 +62,7 @@
                 android:id="@+id/switch_settings"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-               android:layout_marginStart="3dp"
+                android:layout_marginStart="3dp"
                 android:layout_weight="1.5"
                 android:switchMinWidth="15dp"
                 android:checked="false"
@@ -70,6 +70,40 @@
                 android:textOn="ON"/>
 
         </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:weightSum="5">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:layout_weight="3.5"
+            android:text="Satellite Mode">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+
+        <Switch
+            android:id="@+id/switch_satellite"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_weight="1.5"
+            android:switchMinWidth="15dp"
+            android:checked="false"
+            android:textOff="OFF"
+            android:textOn="ON"/>
+
+    </LinearLayout>
 
 
 

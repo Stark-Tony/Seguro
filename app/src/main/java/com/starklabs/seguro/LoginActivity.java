@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private MaterialButton login_button_login;
     private AlertDialog.Builder dialogBuilder, rationalBuilder;
     private DialogInterface.OnClickListener dialogClickListener;
-
+    static ProgressDialog staticProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+                staticProgress = new ProgressDialog(LoginActivity.this);
+                staticProgress.setMessage("Loading Maps...");
+                staticProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                staticProgress.show();
             }
         });
 

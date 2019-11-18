@@ -1,14 +1,19 @@
 package com.starklabs.seguro;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -31,8 +36,11 @@ public class FetchURL extends AsyncTask<String, Void,String> {
     ArrayList<ArrayList<String>> routesList;
     GoogleMap mMap;
     LatLng source, destination;
-    public FetchURL(Context context, GoogleMap mMap, LatLng source, LatLng destination)
+    ProgressDialog mProgressDialog;
+    Window mWindow;
+    public FetchURL(Window window, Context context, GoogleMap mMap, LatLng source, LatLng destination)
     {
+        mWindow=window;
         mContext = context;
         this.mMap = mMap;
         this.source=source;
@@ -59,6 +67,9 @@ public class FetchURL extends AsyncTask<String, Void,String> {
         int i=1;
         int r=40,g=40,b=40;
         mMap.clear();
+        CircleOptions circleOptions = new CircleOptions();
+        circleOptions.center(source).fillColor(Color.rgb(255,0,0)).radius(10).visible(true).strokeWidth(0);
+        mMap.addCircle(circleOptions);
         for(ArrayList<String> route:routesList)
         {
             polyLines = route;
@@ -91,12 +102,14 @@ public class FetchURL extends AsyncTask<String, Void,String> {
             if(b>255)
                 b=40;
         }
-        mMap.addMarker(new MarkerOptions().position(new LatLng(source.latitude,source.longitude)).title("Source"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(destination.latitude,destination.longitude)).title("Destination"));
-
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,15));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(source.latitude,source.longitude)).title("Source"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(destination.latitude,destination.longitude)).title("Destination"));
+        mProgressDialog.cancel();
+        new HideStatus().hideStatus(mWindow);
     }
 
-    public String fetchData (String url) throws IOException {
+    private String fetchData (String url) throws IOException {
         HttpURLConnection connection=null;
         InputStream inputStreamReader=null;
         String line="";
@@ -128,4 +141,12 @@ public class FetchURL extends AsyncTask<String, Void,String> {
         return responseContent.toString();
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage("Loading your routes...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.show();
+    }
 }

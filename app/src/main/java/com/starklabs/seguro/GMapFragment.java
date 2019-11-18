@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
@@ -83,7 +84,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-public class GMapFragment extends Fragment implements OnMapReadyCallback, LocationListener{
+public class GMapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
     View mapView;
     View locationButton;
@@ -140,11 +141,26 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        LoginActivity.staticProgress.cancel();
+        new HideStatus().hideStatus(getActivity().getWindow());
         gMap = googleMap;
         gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         gMap.setMyLocationEnabled(true);
         gMap.setTrafficEnabled(false);
 
+        SharedPreferences preferences = getActivity().getSharedPreferences("SettingsPref", Context.MODE_PRIVATE);
+        boolean traffic = preferences.getBoolean("traffic", false);
+        boolean satellite = preferences.getBoolean("satellite", false);
+        if (traffic) {
+            gMap.setTrafficEnabled(true);
+        } else {
+            gMap.setTrafficEnabled(false);
+        }
+        if (satellite) {
+            gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        } else {
+            gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        }
         gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -244,7 +260,6 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
             public void onClick(View v) {
                 myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, new AutoCompleteFragment()).addToBackStack("MapFragment").commit();
                 //https://maps.googleapis.com/maps/api/directions/json?origin=41.43206,-81.38992&destination=40.43399,-81.38600&alternatives=true&key=AIzaSyAwdxRlmAXwjm_mcFQnM-f-vguZr6JkxV8
-                //new FetchURL(getContext(),gMap).execute();
             }
         });
 
@@ -254,16 +269,22 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("return","I am here in resume");
-        Log.d("return",MainActivity.destLL+" "+MainActivity.sourceLL);
-        if(MainActivity.destLL!=null && MainActivity.sourceLL!=null)
-        {
-            Log.d("return","I am here in resume not null");
-            Log.d("return",MainActivity.destLL+" "+MainActivity.sourceLL);
-            new FetchURL(getContext(),gMap,MainActivity.sourceLL,MainActivity.destLL).execute();
-            MainActivity.sourceLL=MainActivity.destLL=null;
-            Log.d("return",MainActivity.destLL+" "+MainActivity.sourceLL);
+        if (gMap != null) {
+            SharedPreferences preferences = getActivity().getSharedPreferences("SettingsPref", Context.MODE_PRIVATE);
+            boolean traffic = preferences.getBoolean("traffic", false);
+            boolean satellite = preferences.getBoolean("satellite", false);
+            if (traffic) {
+                gMap.setTrafficEnabled(true);
+            } else {
+                gMap.setTrafficEnabled(false);
+            }
+            if (satellite) {
+                gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            } else {
+                gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            }
         }
+        drawToMap();
         new HideStatus().hideStatus(getActivity().getWindow());
         provider = LocationManager.GPS_PROVIDER;
         if (myActivity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && myActivity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -322,5 +343,18 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         } else
             return true;
     }
+
+    private void drawToMap() {
+        Log.d("return", "I am here in resume");
+        Log.d("return", MainActivity.destLL + " " + MainActivity.sourceLL);
+        if (MainActivity.destLL != null && MainActivity.sourceLL != null) {
+            Log.d("return", "I am here in resume not null");
+            Log.d("return", MainActivity.destLL + " " + MainActivity.sourceLL);
+            new FetchURL(getActivity().getWindow(), getContext(), gMap, MainActivity.sourceLL, MainActivity.destLL).execute();
+            MainActivity.sourceLL = MainActivity.destLL = null;
+            Log.d("return", MainActivity.destLL + " " + MainActivity.sourceLL);
+        }
+    }
+
 
 }
