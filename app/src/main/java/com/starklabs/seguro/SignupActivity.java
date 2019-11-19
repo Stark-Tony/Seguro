@@ -106,9 +106,8 @@ public class SignupActivity extends AppCompatActivity {
                     RadioButton radioButton = (RadioButton) radioGroup.findViewById(radioButtonID);
                     String gender = (String) radioButton.getText();
 
-                    String url1= "http://172.19.14.190:8081/api/login/email/" + email + "/" + password;
-                    String url = "http://172.19.14.190:8081/api/SignUp/AddUser/"+fullname+"/"+email+"/"+phonenumber+"/"+password+"/"+gender+"/"+sDate1;
-                    Log.d("url",url+":"+url1);
+                    String url = "http://192.168.43.146:8081/api/SignUp/AddUser/"+fullname+"/"+email+"/"+phonenumber+"/"+password+"/"+gender+"/"+sDate1;
+                    Log.d("url",url);
                     StringRequest stringrequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

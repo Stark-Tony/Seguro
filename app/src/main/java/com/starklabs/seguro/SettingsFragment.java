@@ -2,6 +2,7 @@ package com.starklabs.seguro;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,10 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import com.google.android.material.textview.MaterialTextView;
 
 public class SettingsFragment extends Fragment {
 
     Switch mSwitch, sSwitch;
+    MaterialTextView logout;
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -46,6 +51,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mSwitch = getActivity().findViewById(R.id.switch_settings);
         sSwitch = getActivity().findViewById(R.id.switch_satellite);
+        logout=getActivity().findViewById(R.id.fragment_settings_logout);
         final SharedPreferences sharedPreferences= getActivity().getSharedPreferences("SettingsPref", Context.MODE_PRIVATE);
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -97,6 +103,24 @@ public class SettingsFragment extends Fragment {
         {
             sSwitch.setChecked(false);
         }
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    SharedPreferences preferences = getActivity().getSharedPreferences("LogInfo",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("isLoggedIn",false);
+                    editor.commit();
+                    Intent intent = new Intent(getContext(),LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getActivity(),"Couldn't signout",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -105,6 +129,4 @@ public class SettingsFragment extends Fragment {
         drawerLocker.setDrawerEnabled(true);
         super.onDestroy();
     }
-
-
 }

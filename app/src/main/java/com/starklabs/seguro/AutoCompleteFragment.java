@@ -191,5 +191,4 @@ public class AutoCompleteFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
-
 }

@@ -67,18 +67,18 @@ public class FetchPoints extends AsyncTask <String,Void,String>{
             {
                 CircleOptions circleOptions = new CircleOptions();
                 LatLng tempLatLan = crimePoints.get(i);
-                circleOptions.center(tempLatLan).radius(5).visible(true);
+                circleOptions.center(tempLatLan).radius(8).visible(true);
                 if(crimeonpoints.get(i)<=30)
                 {
-                    circleOptions.fillColor(Color.rgb(10,82,2)).strokeWidth(2).strokeColor(Color.rgb(10,82,2));
+                    circleOptions.fillColor(Color.rgb(0,118,0)).strokeWidth(2).strokeColor(Color.rgb(0,118,0));
                 }
                 else if(crimeonpoints.get(i)<=70)
                 {
-                    circleOptions.fillColor(Color.rgb(93,91,11)).strokeWidth(2).strokeColor(Color.rgb(93,91,11));
+                    circleOptions.fillColor(Color.rgb(4,4,180)).strokeWidth(2).strokeColor(Color.rgb(4,4,180));
                 }
                 else
                 {
-                    circleOptions.fillColor(Color.rgb(255,0,0)).strokeWidth(2).strokeColor(Color.rgb(255,0,0));
+                    circleOptions.fillColor(Color.rgb(150,4,4)).strokeWidth(2).strokeColor(Color.rgb(150,4,4));
                 }
                 mMap.addCircle(circleOptions);
             }
@@ -156,7 +156,7 @@ public class FetchPoints extends AsyncTask <String,Void,String>{
         String line="";
         StringBuffer responseContent = null;
         try{
-            URL url= new URL("http://172.19.14.190:8081/api/Getpath/"+source.latitude+"/"+source.longitude+"/"+dest.latitude+"/"+dest.longitude);
+            URL url= new URL("http://192.168.43.146:8081/api/Getpath/"+source.latitude+"/"+source.longitude+"/"+dest.latitude+"/"+dest.longitude);
             connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(60*1000);
             connection.setReadTimeout(60*1000);
@@ -225,5 +225,4 @@ public class FetchPoints extends AsyncTask <String,Void,String>{
         System.out.println("i am returning");
         return poly;
     }
-
 }

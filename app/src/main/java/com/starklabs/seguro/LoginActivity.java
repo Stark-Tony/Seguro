@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     final String user_email,user_pass;
                     user_email = login_email.getText().toString().trim();
                     user_pass = login_password.getText().toString().trim();
-                    String url = "http://172.19.14.190:8081/api/login/email/" + user_email + "/" + user_pass;
+                    String url = "http://192.168.43.146:8081/api/login/email/" + user_email + "/" + user_pass;
                     StringRequest stringrequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

@@ -369,6 +369,4 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
             MainActivity.sourceLL = MainActivity.destLL = null;
         }
     }
-
-
 }
