@@ -13,6 +13,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.media.audiofx.Equalizer;
@@ -25,8 +26,15 @@ import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Space;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
@@ -41,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
     private MaterialButton login_button_login;
     private AlertDialog.Builder dialogBuilder, rationalBuilder;
     private DialogInterface.OnClickListener dialogClickListener;
-    static ProgressDialog staticProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,12 +74,61 @@ public class LoginActivity extends AppCompatActivity {
         login_button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                staticProgress = new ProgressDialog(LoginActivity.this);
-                staticProgress.setMessage("Loading Maps...");
-                staticProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                staticProgress.show();
+                login_warning.setText("");
+                final ProgressDialog localProgress=new ProgressDialog(LoginActivity.this);
+                if (login_email.getText().toString().trim().equals("") || login_password.getText().toString().trim().equals("")) {
+                    login_warning.setText("None of the feilds can be empty");
+                }
+                else
+                {
+                    localProgress.setCancelable(false);
+                    localProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    localProgress.setMessage("Logging In...");
+                    localProgress.show();
+                    RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+                    final String user_email,user_pass;
+                    user_email = login_email.getText().toString().trim();
+                    user_pass = login_password.getText().toString().trim();
+                    String url = "http://172.19.14.190:8081/api/login/email/" + user_email + "/" + user_pass;
+                    StringRequest stringrequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("response",response);
+                            if (response.contains("invalid")) {
+                                localProgress.cancel();
+                                login_warning.setText("Invalid Username/Password");
+                            } else if(response.equals("valid")){
+                                Toast.makeText(LoginActivity.this,"Logged in",Toast.LENGTH_SHORT).show();
+                                SharedPreferences preferences = getApplicationContext().getSharedPreferences("LogInfo", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putBoolean("isLoggedIn",true);
+                                editor.commit();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                localProgress.cancel();
+                                SplashActivity.staticProgress = new ProgressDialog(LoginActivity.this);
+                                SplashActivity.staticProgress.setMessage("Loading Maps...");
+                                SplashActivity.staticProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                SplashActivity.staticProgress.show();
+                                finish();
+                            }
+                            else
+                            {
+                                localProgress.cancel();
+                                Toast.makeText(LoginActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            localProgress.cancel();
+                            login_warning.setText("Error Connecting Server");
+                        }
+                    });
+                    requestQueue.add(stringrequest);
+                }
+                //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                //startActivity(intent);
             }
         });
 
@@ -197,6 +253,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        login_warning.setText("");
         //Shift Internet check to splash screen OnCreate so that app quits if no internet connection is found
         if (!checkInternet()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -33,7 +33,7 @@ public class FetchURL extends AsyncTask<String, Void,String> {
     Context mContext;
     String object="";
     ArrayList<String> polyLines;
-    ArrayList<ArrayList<String>> routesList;
+    static ArrayList<ArrayList<String>> routesList;
     GoogleMap mMap;
     LatLng source, destination;
     ProgressDialog mProgressDialog;
@@ -67,10 +67,7 @@ public class FetchURL extends AsyncTask<String, Void,String> {
         int i=1;
         int r=40,g=40,b=40;
         mMap.clear();
-        CircleOptions circleOptions = new CircleOptions();
-        circleOptions.center(source).fillColor(Color.rgb(255,0,0)).radius(10).visible(true).strokeWidth(0);
-        mMap.addCircle(circleOptions);
-        for(ArrayList<String> route:routesList)
+        /*for(ArrayList<String> route:routesList)
         {
             polyLines = route;
             for(String poly:polyLines)
@@ -101,7 +98,7 @@ public class FetchURL extends AsyncTask<String, Void,String> {
                 g=40;
             if(b>255)
                 b=40;
-        }
+        }*/
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(source,15));
         //mMap.addMarker(new MarkerOptions().position(new LatLng(source.latitude,source.longitude)).title("Source"));
         //mMap.addMarker(new MarkerOptions().position(new LatLng(destination.latitude,destination.longitude)).title("Destination"));

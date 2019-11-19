@@ -17,10 +17,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.telecom.Connection;
+import android.telecom.ConnectionService;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,6 +86,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GMapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
@@ -100,6 +104,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
     private CardView searchBox;
     private TextView searchHere;
     AppCompatActivity myActivity;
+    CircleImageView button_sos;
 
     public GMapFragment() {
         //required empty constructor
@@ -114,6 +119,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         mToolbar = myActivity.findViewById(R.id.toolbar);
         searchBox = myActivity.findViewById(R.id.main_card_view);
         searchHere = myActivity.findViewById(R.id.map_searchbox);
+        button_sos = myActivity.findViewById(R.id.button_sos);
 
         myActivity.setSupportActionBar(mToolbar);
         myActivity.getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -128,6 +134,15 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
         criteria = new Criteria();
         mLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
+        button_sos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callerIntent = new Intent(Intent.ACTION_DIAL);
+                callerIntent.setData(Uri.parse("tel:8948126138"));
+                startActivity(callerIntent);
+            }
+        });
+
     }
 
     @Nullable
@@ -141,7 +156,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        LoginActivity.staticProgress.cancel();
+        SplashActivity.staticProgress.cancel();
         new HideStatus().hideStatus(getActivity().getWindow());
         gMap = googleMap;
         gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -221,8 +236,6 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
                 mapView.findViewById(Integer.parseInt("1")) != null) {
             // Get the button view
             locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
-            //locationButton.performClick();
-            // and next place it, on bottom right (as Google Maps app)
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)
                     locationButton.getLayoutParams();
             // position on right bottom
@@ -351,8 +364,9 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback, Locati
             Log.d("return", "I am here in resume not null");
             Log.d("return", MainActivity.destLL + " " + MainActivity.sourceLL);
             new FetchURL(getActivity().getWindow(), getContext(), gMap, MainActivity.sourceLL, MainActivity.destLL).execute();
-            MainActivity.sourceLL = MainActivity.destLL = null;
             Log.d("return", MainActivity.destLL + " " + MainActivity.sourceLL);
+            new FetchPoints(getContext(), gMap, MainActivity.sourceLL, MainActivity.destLL).execute();
+            MainActivity.sourceLL = MainActivity.destLL = null;
         }
     }
 
